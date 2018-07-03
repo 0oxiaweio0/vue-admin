@@ -18,8 +18,8 @@ function hasPermission(roles, route) {
  * @param asyncRouterMap
  * @param roles
  */
-function filterAsyncRouter(asyncRouterMap, roles) {
-  const accessedRouters = asyncRouterMap.filter(route => {
+function filterAsyncRouter(asyncRouterMap, roles,type) {
+  const accessedRouters = asyncRouterMap.routers.filter(route => {
     if (hasPermission(roles, route)) {
       if (route.children && route.children.length) {
         route.children = filterAsyncRouter(route.children, roles)
@@ -27,7 +27,7 @@ function filterAsyncRouter(asyncRouterMap, roles) {
       return true
     }
     return false
-  })
+  });
   return accessedRouters
 }
 
@@ -50,7 +50,7 @@ const permission = {
         if (roles.indexOf('admin') >= 0) {
           accessedRouters = asyncRouterMap
         } else {
-          accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+          accessedRouters = filterAsyncRouter(asyncRouterMap, roles,type)
         }
         commit('SET_ROUTERS', accessedRouters)
         resolve()
