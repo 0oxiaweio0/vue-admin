@@ -56,7 +56,21 @@ export default {
     exportZip: 'Export Zip',
     theme: '换肤',
     clipboardDemo: 'Clipboard',
-    i18n: '国际化'
+    i18n: '国际化',
+    my:'基本信息',
+    myInfo:'我的信息',
+    alertPassWord:'密码修改',
+    myArticle:'我的文章',
+    sendArticle:'发表的文章',
+    loveArticle:'收藏的文章',
+    vue:'vue',
+    vueAdd:'vue文章新增',
+    vueManage:'vue文章列表',
+    angular:'angular',
+    angularAdd:'angular文章新增',
+    angularManage:'angular文章列表',
+
+
   },
   navbar: {
     logOut: '退出登录',

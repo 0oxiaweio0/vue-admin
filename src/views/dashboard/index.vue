@@ -1,16 +1,38 @@
 <template>
-  <div style="background:#f0f2f5;margin-top: -20px;height:100%;">
+  <div style="background:#f0f2f5;height:100%;">
+    <navbar></navbar>
+    <div class="modals-content">
+      <div class="modal-item" v-for="item in modals">
+        <router-link :to="item.path">
+          <div class="modal-item-icon">
+            <svg-icon :icon-class="item.icon"></svg-icon>
+          </div>
+          <div class="modal-item-label">
+            <span>{{item.title}}</span>
+          </div>
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
   import img_settings from '@/assets/dashboard/settings.png'
+  import { Navbar} from '@/views/layout/components'
 
   export default {
-    name: 'workbench',
+    name: 'dashboard',
+    components:{
+      Navbar
+    },
     data() {
       return {
-        img_settings
+        img_settings,
+        modals:[
+          {title:"文章中心",icon:"article",path:"vue"},
+          {title:"个人中心",icon:"personCenter",path:"my"},
+          {title:"系统配置",icon:"sysConfig",path:"set"}
+        ]
       }
     },
     computed: {
@@ -19,192 +41,23 @@
   }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-  .wscn-http404 {
-    position: relative;
+<style rel="stylesheet/css" lang="css" scoped>
+  .modals-content{
     width: 1200px;
-    margin: 20px auto 60px;
-    padding: 0 100px;
-    overflow: hidden;
-    .pic-404 {
-      position: relative;
-      float: left;
-      width: 600px;
-      padding: 150px 0;
-      overflow: hidden;
-      &__parent {
-        width: 100%;
-      }
-      &__child {
-        position: absolute;
-        &.left {
-          width: 80px;
-          top: 17px;
-          left: 220px;
-          opacity: 0;
-          animation-name: cloudLeft;
-          animation-duration: 2s;
-          animation-timing-function: linear;
-          animation-fill-mode: forwards;
-          animation-delay: 1s;
-        }
-        &.mid {
-          width: 46px;
-          top: 10px;
-          left: 420px;
-          opacity: 0;
-          animation-name: cloudMid;
-          animation-duration: 2s;
-          animation-timing-function: linear;
-          animation-fill-mode: forwards;
-          animation-delay: 1.2s;
-        }
-        &.right {
-          width: 62px;
-          top: 100px;
-          left: 500px;
-          opacity: 0;
-          animation-name: cloudRight;
-          animation-duration: 2s;
-          animation-timing-function: linear;
-          animation-fill-mode: forwards;
-          animation-delay: 1s;
-        }
-        @keyframes cloudLeft {
-          0% {
-            top: 17px;
-            left: 220px;
-            opacity: 0;
-          }
-          20% {
-            top: 33px;
-            left: 188px;
-            opacity: 1;
-          }
-          80% {
-            top: 81px;
-            left: 92px;
-            opacity: 1;
-          }
-          100% {
-            top: 97px;
-            left: 60px;
-            opacity: 0;
-          }
-        }
-        @keyframes cloudMid {
-          0% {
-            top: 10px;
-            left: 420px;
-            opacity: 0;
-          }
-          20% {
-            top: 40px;
-            left: 360px;
-            opacity: 1;
-          }
-          70% {
-            top: 130px;
-            left: 180px;
-            opacity: 1;
-          }
-          100% {
-            top: 160px;
-            left: 120px;
-            opacity: 0;
-          }
-        }
-        @keyframes cloudRight {
-          0% {
-            top: 100px;
-            left: 500px;
-            opacity: 0;
-          }
-          20% {
-            top: 120px;
-            left: 460px;
-            opacity: 1;
-          }
-          80% {
-            top: 180px;
-            left: 340px;
-            opacity: 1;
-          }
-          100% {
-            top: 200px;
-            left: 300px;
-            opacity: 0;
-          }
-        }
-      }
-    }
-    .bullshit {
-      position: relative;
-      float: left;
-      width: 300px;
-      padding: 150px 0;
-      overflow: hidden;
-      &__oops {
-        font-size: 32px;
-        font-weight: bold;
-        line-height: 40px;
-        color: #1482f0;
-        opacity: 0;
-        margin-bottom: 20px;
-        animation-name: slideUp;
-        animation-duration: 0.5s;
-        animation-fill-mode: forwards;
-      }
-      &__headline {
-        font-size: 20px;
-        line-height: 24px;
-        color: #1482f0;
-        opacity: 0;
-        margin-bottom: 10px;
-        animation-name: slideUp;
-        animation-duration: 0.5s;
-        animation-delay: 0.1s;
-        animation-fill-mode: forwards;
-      }
-      &__info {
-        font-size: 13px;
-        line-height: 21px;
-        color: grey;
-        opacity: 0;
-        margin-bottom: 30px;
-        animation-name: slideUp;
-        animation-duration: 0.5s;
-        animation-delay: 0.2s;
-        animation-fill-mode: forwards;
-      }
-      &__return-home {
-        display: block;
-        float: left;
-        width: 110px;
-        height: 36px;
-        background: #1482f0;
-        border-radius: 100px;
-        text-align: center;
-        color: #ffffff;
-        opacity: 0;
-        font-size: 14px;
-        line-height: 36px;
-        cursor: pointer;
-        animation-name: slideUp;
-        animation-duration: 0.5s;
-        animation-delay: 0.3s;
-        animation-fill-mode: forwards;
-      }
-      @keyframes slideUp {
-        0% {
-          transform: translateY(60px);
-          opacity: 0;
-        }
-        100% {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
-    }
+    margin: 100px auto;
   }
+  .modals-content .modal-item{
+    font-size: 100px;
+    width: 200px;
+    float: left;
+    margin: 20px;
+    border-radius: 21px;
+    -moz-box-shadow: 0 5px 15px 0 #c3c3c3 ;
+    -webkit-box-shadow:0 5px 15px 0 #c3c3c3 ;
+    box-shadow: 0 5px 15px 0 #c3c3c3;}
+  .modals-content:after{visibility: hidden;content: "";display: block;clear: both}
+  .modals-content .modal-item:hover{cursor: pointer;}
+  .modals-content .modal-item .modal-item-icon{text-align: center;margin-top: 10px}
+  .modals-content .modal-item .modal-item-label{ height: 30px;position: relative;margin-top: 15px}
+  .modals-content .modal-item .modal-item-label span{position:absolute;top:0;font-size: 20px;display:inline-block;width:100%;text-align: center;font-weight: normal}
 </style>
