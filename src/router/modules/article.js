@@ -9,7 +9,8 @@ const articleRouterMap=[
     alwaysShow: true,
     meta: {
       title: 'vue',
-      icon: 'vuejs'
+      icon: 'vuejs',
+      group:['article']
     },
     children: [{
       path: 'vueAdd',
@@ -34,7 +35,8 @@ const articleRouterMap=[
     redirect: '/angular/add',
     meta: {
       title: 'angular',
-      icon: 'angular'
+      icon: 'angular',
+      group:['article']
     },
     children: [{
       path: 'angularAdd',

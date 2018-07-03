@@ -10,7 +10,8 @@ const personCenterRouterMap=[
     meta: {
       title: 'my',
       icon: 'user',
-      roles: ['admin', 'editor']
+      roles: ['admin', 'editor'],
+      group:['personCenter']
     },
     children: [{
       path: 'info',
@@ -35,7 +36,8 @@ const personCenterRouterMap=[
     redirect: '/myArticle/sendArticle',
     meta: {
       title: 'sendArticle',
-      icon: 'article'
+      icon: 'article',
+      group:['personCenter']
     },
     children: [{
       path: 'sendArticle',

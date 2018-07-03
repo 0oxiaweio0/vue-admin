@@ -3,7 +3,7 @@
     <navbar></navbar>
     <div class="modals-content">
       <div class="modal-item" v-for="item in modals">
-        <router-link :to="item.path">
+        <router-link :to="item.path" @click="goClick">
           <div class="modal-item-icon">
             <svg-icon :icon-class="item.icon"></svg-icon>
           </div>
@@ -37,6 +37,11 @@
     },
     computed: {
 
+    },
+    methods:{
+      goClick(){
+        console.log("enter");
+      }
     }
   }
 </script>
