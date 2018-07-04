@@ -65,6 +65,7 @@ export default {
     loveArticle:'收藏的文章',
     vue:'vue',
     vueAdd:'vue文章新增',
+    vueEdit:'vue文章编译',
     vueManage:'vue文章列表',
     angular:'angular',
     angularAdd:'angular文章新增',

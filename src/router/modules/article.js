@@ -28,6 +28,15 @@ const articleRouterMap=[
         title: 'vueManage',
         group:'article'
       }
+    }, {
+      path: 'vueEdit/:id(\\d+)',
+      component: () => import('@/views/article/vue/edit'),
+      name: 'vueEdit',
+      meta: {
+        title: 'vueEdit',
+        group:'article'
+      },
+      hidden: true
     }]
   },
   /*angular类型文章管理*/
