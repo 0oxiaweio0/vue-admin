@@ -34,12 +34,20 @@ function filterAsyncRouter(asyncRouterMap, roles,type) {
 const permission = {
   state: {
     routers: constantRouterMap,
-    addRouters: []
+    addRouters: [],
+    modalType:'',//当前主模块
+    modalRouters:[]//当前主模块可访问路由
   },
   mutations: {
     SET_ROUTERS: (state, routers) => {
-      state.addRouters = routers
+      state.addRouters = routers;
       state.routers = constantRouterMap.concat(routers)
+    },
+    SET_MODAL_TYPE:(state,type) =>{
+      state.modalType=type
+    },
+    SET_MODAL_ROUTERS:(state,routers) =>{
+      state.modalRouters=routers;
     }
   },
   actions: {
@@ -55,6 +63,16 @@ const permission = {
         commit('SET_ROUTERS', accessedRouters)
         resolve()
       })
+    },
+    SetModalType ({ commit }, data){
+      if(data){
+        commit('SET_MODAL_TYPE', data)
+      }
+    },
+    SetModalRouters ({ commit }, data){
+      if(data){
+        commit('SET_MODAL_ROUTERS', data)
+      }
     }
   }
 }

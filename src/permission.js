@@ -13,6 +13,25 @@ function hasPermission(roles, permissionRoles) {
   if (!permissionRoles) return true
   return roles.some(role => permissionRoles.indexOf(role) >= 0)
 }
+// 更具当前主模块类型对所有的路由进行过滤
+function getGrouproutersByType(routers,type) {
+  const modalRouters = routers.filter(router =>{
+    if(type){
+      if(router.meta){
+        if(router.meta.group&&router.meta.group===type){
+          if (router.children && router.children.length) {
+            router.children = getGrouproutersByType(router.children,type)
+          }
+          return true
+        }
+        return false
+      }
+      return false
+    }
+    return false
+  });
+  return modalRouters
+}
 
 const whiteList = ['/login', '/authredirect']// no redirect whitelist
 
@@ -24,6 +43,15 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
+      if(to.meta.group){//跳转模块和当前模块判断,并设置当前模路由
+        if(to.meta.group!==store.getters.modalType){
+          store.dispatch('SetModalType',to.meta.group);
+          const modalRuters=getGrouproutersByType(store.getters.permission_routers,to.meta.group);
+          store.dispatch('delAllViews')//模块切换清除之前的浏览过功能
+          store.dispatch('SetModalRouters',modalRuters)
+
+        }
+      }
       if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
         store.dispatch('GetUserInfo').then(res => { // 拉取user_info
           const roles = res.data.roles // note: roles must be a array! such as: ['editor','develop']

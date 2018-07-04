@@ -10,21 +10,23 @@ const articleRouterMap=[
     meta: {
       title: 'vue',
       icon: 'vuejs',
-      group:['article']
+      group:'article'
     },
     children: [{
       path: 'vueAdd',
       component: () => import('@/views/article/vue/add'),
       name: 'vueAdd',
       meta: {
-        title: 'vueAdd'
+        title: 'vueAdd',
+        group:'article'
       }
     }, {
       path: 'vueManage',
       component: () => import('@/views/article/vue/manage'),
       name: 'vueManage',
       meta: {
-        title: 'vueManage'
+        title: 'vueManage',
+        group:'article'
       }
     }]
   },
@@ -36,21 +38,23 @@ const articleRouterMap=[
     meta: {
       title: 'angular',
       icon: 'angular',
-      group:['article']
+      group:'article'
     },
     children: [{
       path: 'angularAdd',
       component: () => import('@/views/article/angular/add'),
       name: 'angularAdd',
       meta: {
-        title: 'angularAdd'
+        title: 'angularAdd',
+        group:'article'
       }
     }, {
       path: 'manage',
       component: () => import('@/views/article/angular/manage'),
       name: 'angularManage',
       meta: {
-        title: 'angularManage'
+        title: 'angularManage',
+        group:'article'
       }
     }]
   }
