@@ -1,10 +1,12 @@
 <template>
-
+  <article-detail :is-edit='false'></article-detail>
 </template>
 
 <script>
-  export default {
-    name:'vueAdd'
-  }
+  import ArticleDetail from './components/ArticleDetail'
 
+  export default {
+    name: 'vueAdd',
+    components: { ArticleDetail }
+  }
 </script>
