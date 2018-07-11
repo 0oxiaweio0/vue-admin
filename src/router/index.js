@@ -40,6 +40,7 @@ export const constantRouterMap = [
 export default new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
+  mode: 'history',//去掉路由中#
   routes: constantRouterMap
 })
 
