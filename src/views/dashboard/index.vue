@@ -2,8 +2,8 @@
   <div style="background:#f0f2f5;height:100%;">
     <navbar></navbar>
     <div class="modals-content">
-      <div class="modal-item" v-for="item in modals">
-        <router-link :to="item.path" @click="goClick">
+      <div class="modal-item animated " v-for="item in modals">
+        <router-link :to="item.path">
           <div class="modal-item-icon">
             <svg-icon :icon-class="item.icon"></svg-icon>
           </div>
@@ -39,9 +39,7 @@
 
     },
     methods:{
-      goClick(){
-        console.log("enter");
-      }
+
     }
   }
 </script>
@@ -50,6 +48,29 @@
   .modals-content{
     width: 1200px;
     margin: 100px auto;
+  }
+  .modals-content .animated {
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+  @keyframes pulse {
+    0% {
+      transform: scale(1, 1)
+
+    }
+    50% {
+      transform: scale(1.05, 1.05)
+    }
+    100% {
+      transform: scale(1.03, 1.03)
+    }
+  }
+
+  .modals-content .modal-item:hover {
+    -webkit-animation-name: pulse;
+    animation-name: pulse
   }
   .modals-content .modal-item{
     font-size: 100px;
