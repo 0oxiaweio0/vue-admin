@@ -1,7 +1,7 @@
 import Layout from '@/views/layout/Layout'
 
-const personCenterRouterMap=[
-  /*基本信息*/
+const personCenterRouterMap = [
+  /* 基本信息 */
   {
     path: '/my',
     component: Layout,
@@ -11,7 +11,7 @@ const personCenterRouterMap=[
       title: 'my',
       icon: 'user',
       roles: ['admin', 'editor'],
-      group:'personCenter'
+      group: 'personCenter'
     },
     children: [{
       path: 'info',
@@ -19,7 +19,7 @@ const personCenterRouterMap=[
       name: 'myInfo',
       meta: {
         title: 'myInfo',
-        group:'personCenter'
+        group: 'personCenter'
       }
     }, {
       path: 'alertPassWord',
@@ -27,19 +27,19 @@ const personCenterRouterMap=[
       name: 'alertPassWord',
       meta: {
         title: 'alertPassWord',
-        group:'personCenter'
+        group: 'personCenter'
       }
     }]
   },
-  /*我的文章*/
+  /* 我的文章 */
   {
-    path:'/myArticle',
+    path: '/myArticle',
     component: Layout,
     redirect: '/myArticle/sendArticle',
     meta: {
       title: 'sendArticle',
       icon: 'article',
-      group:'personCenter'
+      group: 'personCenter'
     },
     children: [{
       path: 'sendArticle',
@@ -47,7 +47,7 @@ const personCenterRouterMap=[
       name: 'sendArticle',
       meta: {
         title: 'sendArticle',
-        group:'personCenter'
+        group: 'personCenter'
       }
     }, {
       path: 'loveArticle',
@@ -55,7 +55,7 @@ const personCenterRouterMap=[
       name: 'loveArticle',
       meta: {
         title: 'loveArticle',
-        group:'personCenter'
+        group: 'personCenter'
       }
     }]
   }

@@ -29,8 +29,8 @@ import Layout from '@/views/layout/Layout'
  **/
 export const constantRouterMap = [
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
-  { path: '/dashboard', component: () => import('@/views/dashboard/index'), hidden: true ,name:'dashboard'},
-  { path: '', redirect:'/dashboard'},
+  { path: '/dashboard', component: () => import('@/views/dashboard/index'), hidden: true, name: 'dashboard' },
+  { path: '', redirect: '/dashboard' },
   { path: '/authredirect', component: () => import('@/views/login/authredirect'), hidden: true },
   { path: '/404', component: () => import('@/views/errorPage/404'), hidden: true },
   { path: '/401', component: () => import('@/views/errorPage/401'), hidden: true },
@@ -40,7 +40,7 @@ export const constantRouterMap = [
 export default new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  mode: 'history',//去掉路由中#
+  mode: 'history', // 去掉路由中#
   routes: constantRouterMap
 })
 

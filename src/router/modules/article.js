@@ -1,7 +1,7 @@
 import Layout from '@/views/layout/Layout'
 
-const articleRouterMap=[
-  /*vue类型文章管理*/
+const articleRouterMap = [
+  /* vue类型文章管理 */
   {
     path: '/vue',
     component: Layout,
@@ -10,7 +10,7 @@ const articleRouterMap=[
     meta: {
       title: 'vue',
       icon: 'vuejs',
-      group:'article'
+      group: 'article'
     },
     children: [{
       path: 'vueAdd',
@@ -18,7 +18,7 @@ const articleRouterMap=[
       name: 'vueAdd',
       meta: {
         title: 'vueAdd',
-        group:'article'
+        group: 'article'
       }
     }, {
       path: 'vueManage',
@@ -26,7 +26,7 @@ const articleRouterMap=[
       name: 'vueManage',
       meta: {
         title: 'vueManage',
-        group:'article'
+        group: 'article'
       }
     }, {
       path: 'vueEdit/:id(\\d+)',
@@ -34,20 +34,20 @@ const articleRouterMap=[
       name: 'vueEdit',
       meta: {
         title: 'vueEdit',
-        group:'article'
+        group: 'article'
       },
       hidden: true
     }]
   },
-  /*angular类型文章管理*/
+  /* angular类型文章管理 */
   {
-    path:'/angular',
+    path: '/angular',
     component: Layout,
     redirect: '/angular/add',
     meta: {
       title: 'angular',
       icon: 'angular',
-      group:'article'
+      group: 'article'
     },
     children: [{
       path: 'angularAdd',
@@ -55,7 +55,7 @@ const articleRouterMap=[
       name: 'angularAdd',
       meta: {
         title: 'angularAdd',
-        group:'article'
+        group: 'article'
       }
     }, {
       path: 'manage',
@@ -63,7 +63,7 @@ const articleRouterMap=[
       name: 'angularManage',
       meta: {
         title: 'angularManage',
-        group:'article'
+        group: 'article'
       }
     }]
   }
