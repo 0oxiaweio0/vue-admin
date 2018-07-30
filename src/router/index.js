@@ -33,16 +33,17 @@ export const constantRouterMap = [
   { path: '', redirect: '/dashboard' },
   { path: '/authredirect', component: () => import('@/views/login/authredirect'), hidden: true },
   { path: '/404', component: () => import('@/views/errorPage/404'), hidden: true },
-  { path: '/401', component: () => import('@/views/errorPage/401'), hidden: true },
-  { path: '*', redirect: '/404', hidden: true }
+  { path: '/401', component: () => import('@/views/errorPage/401'), hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 export default new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  mode: 'history', // 去掉路由中#
   routes: constantRouterMap
 })
 
-export const asyncRouterMap = [].concat(personCenterRouterMap,articleRouterMap)
+export const asyncRouterMap = [
+  { path: '*', redirect: '/404', hidden: true }
+].concat(personCenterRouterMap, articleRouterMap)
 // 监听,当路由发生变化的时候执行

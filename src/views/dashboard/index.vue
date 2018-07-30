@@ -18,27 +18,27 @@
 
 <script>
   import img_settings from '@/assets/dashboard/settings.png'
-  import { Navbar} from '@/views/layout/components'
+  import { Navbar } from '@/views/layout/components'
 
   export default {
     name: 'dashboard',
-    components:{
+    components: {
       Navbar
     },
     data() {
       return {
         img_settings,
-        modals:[
-          {title:"文章中心",icon:"article",path:"vue"},
-          {title:"个人中心",icon:"personCenter",path:"my"},
-          {title:"系统配置",icon:"sysConfig",path:"set"}
+        modals: [
+          { title: '文章中心', icon: 'article', path: 'vue' },
+          { title: '个人中心', icon: 'personCenter', path: 'my' },
+          { title: '系统配置', icon: 'sysConfig', path: 'set' }
         ]
       }
     },
     computed: {
 
     },
-    methods:{
+    methods: {
 
     }
   }

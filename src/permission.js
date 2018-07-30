@@ -36,6 +36,7 @@ function getGrouproutersByType(routers, type) {
 const whiteList = ['/login', '/authredirect']// no redirect whitelist
 
 router.beforeEach((to, from, next) => {
+  console.log(from)
   NProgress.start() // start progress bar
   if (getToken()) { // determine if there has token
     /* has token*/
