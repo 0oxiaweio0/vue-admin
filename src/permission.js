@@ -36,11 +36,9 @@ function getGrouproutersByType(routers, type) {
 const whiteList = ['/login', '/authredirect']// no redirect whitelist
 
 router.beforeEach((to, from, next) => {
-  console.log(from)
   NProgress.start() // start progress bar
   if (getToken()) { // determine if there has token
     /* has token*/
-    console.log(to)
     if (to.path === '/login') {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
