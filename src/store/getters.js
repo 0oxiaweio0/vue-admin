@@ -13,8 +13,8 @@ const getters = {
   setting: state => state.user.setting,
   permission_routers: state => state.permission.routers,
   addRouters: state => state.permission.addRouters,
-  modalRouters:state => state.permission.modalRouters,
-  modalType:state => state.permission.modalType,
+  modalRouters: state => state.permission.modalRouters,
+  modalType: state => state.permission.modalType,
   errorLogs: state => state.errorLog.logs
 }
 export default getters

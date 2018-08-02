@@ -5,7 +5,8 @@
         <h3 class="title">{{$t('login.title')}}</h3>
         <lang-select class="set-language"></lang-select>
       </div>
-      <el-tabs v-model="activeTabs" type="card" @tab-click="handleTabsClick">
+      <el-tabs v-model="activeTabs" type="card">
+        <!--账户密码登录-->
         <el-tab-pane label="账户密码登录" name="first">
           <el-form-item prop="username">
             <span class="svg-container svg-container_login">
@@ -24,34 +25,36 @@
             </span>
           </el-form-item>
         </el-tab-pane>
+        <!--手机号登录-->
         <el-tab-pane label="手机号登录" name="second">
           <el-form-item prop="phone">
             <span class="svg-container svg-container_login">
-              <svg-icon icon-class="phone" />
+              <svg-icon icon-class="user" />
             </span>
-            <el-input name="username" type="text" v-model="loginForm.username" autoComplete="off" placeholder="手机号" />
+            <el-input name="phone" type="text" v-model="loginForm.phone" autoComplete="off" placeholder="手机号" />
           </el-form-item>
           <el-row>
             <el-col :span="16">
-              <el-form-item prop="phone">
+              <el-form-item prop="email">
                 <span class="svg-container svg-container_login">
-                  <svg-icon icon-class="phone" />
+                  <svg-icon icon-class="email" />
                 </span>
-                <el-input name="username" type="text" v-model="loginForm.username" autoComplete="off" placeholder="验证码" />
+                <el-input name="username" type="text" v-model="loginForm.code" autoComplete="off" placeholder="验证码" />
               </el-form-item>
             </el-col>
             <el-col :span="7" :offset="1">
               <el-form-item>
-                <el-button plain>获取验证码</el-button>
+                <el-button plain @click.native.prevent="handleGetCode">获取验证码</el-button>
               </el-form-item>
             </el-col>
           </el-row>
         </el-tab-pane>
       </el-tabs>
+      <!--账号记住以及密码修改-->
       <el-row>
         <el-col :span="12">
           <el-form-item class="no-bg">
-            <el-checkbox v-model="remember">记住密码</el-checkbox>
+            <el-checkbox v-model="loginForm.remember">记住账号</el-checkbox>
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -61,23 +64,46 @@
         </el-col>
       </el-row>
       <el-button type="primary" style="width:100%;margin-bottom:30px;" :loading="loading" @click.native.prevent="handleLogin">{{$t('login.logIn')}}</el-button>
-
-      <el-button type="primary" style="width: 100%;margin-left: 0" @click="showDialog=true">{{$t('login.thirdparty')}}</el-button>
+      <!--第三方登录和账号注册-->
+      <el-row>
+        <el-col :span="6">
+          <el-form-item class="no-bg">
+            <span>其他登录方式</span>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item class="no-bg">
+            <a class="svg-icon-three">
+             <svg-icon icon-class="qq" />
+            </a>
+            <a class="svg-icon-three">
+             <svg-icon icon-class="wechat" />
+            </a>
+          </el-form-item>
+        </el-col>
+        <el-col :span="6">
+          <el-form-item class="no-bg text-align-right">
+            <router-link :to="register">注册账户</router-link>
+          </el-form-item>
+        </el-col>
+      </el-row>
+     <!-- <el-button type="primary" style="width: 100%;margin-left: 0" @click="showDialog=true">{{$t('login.thirdparty')}}</el-button>-->
     </el-form>
 
-    <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog" append-to-body>
+   <!-- <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog" append-to-body>
       {{$t('login.thirdpartyTips')}}
       <br/>
       <br/>
       <br/>
       <social-sign />
-    </el-dialog>
+    </el-dialog>-->
 
   </div>
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate'
+import { isvalidUsername, validatePhone } from '@/utils/validate'
+import { getRember, setRember, removeRember } from '@/utils/auth'
 import LangSelect from '@/components/LangSelect'
 import SocialSign from './socialsignin'
 
@@ -100,13 +126,16 @@ export default {
       }
     }
     return {
-      activeTabs: 'first',
-      remember: false,
+      activeTabs: 'first', // 用于登录功能切换
+      register: '/register',
       loginForm: {
-        username: 'admin',
-        password: '123456'
+        remember: false, // 记住账号标识
+        username: '', // 用户名
+        password: '', // 密码
+        phone: '', // 电话号码
+        code: '' // 验证码
       },
-      loginRules: {
+      loginRules: {// 表单规则
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
@@ -116,14 +145,33 @@ export default {
     }
   },
   methods: {
-    handleTabsClick() {
-
+    rememberAccount() {
+      if (this.loginForm.remember) {
+        setRember({ name: this.loginForm.username })
+      } else {
+        removeRember()
+      }
     },
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
       } else {
         this.passwordType = 'password'
+      }
+    },
+    handleGetCode() {
+      if (this.loginForm.phone === '' || this.loginForm.phone === null) {
+        this.$message({
+          message: '请先填写手机号',
+          type: 'error'
+        })
+      } else {
+        if (!validatePhone(this.loginForm.phone)) {
+          this.$message({
+            message: '手机号格式不正确',
+            type: 'error'
+          })
+        }
       }
     },
     handleLogin() {
@@ -133,6 +181,7 @@ export default {
           this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
             this.loading = false
             this.$router.push({ path: '/' })
+            this.rememberAccount()
           }).catch(() => {
             this.loading = false
           })
@@ -163,6 +212,11 @@ export default {
   },
   created() {
     // window.addEventListener('hashchange', this.afterQRScan)
+    if (getRember()) {
+      const RemberInfo = JSON.parse(getRember())
+      this.loginForm.username = RemberInfo.name
+      this.loginForm.remember = true
+    }
   },
   destroyed() {
     // window.removeEventListener('hashchange', this.afterQRScan)
@@ -199,6 +253,15 @@ $light_gray:#eee;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
+  }
+  .el-form-item a{
+    color: #409EFF;
+  }
+  .el-form-item a.svg-icon-three{
+    color: #3A3A3A;
+  }
+  .el-form-item a.svg-icon-three:hover{
+    color: #409EFF;
   }
   .el-form-item.no-bg{
     background: transparent;
@@ -284,6 +347,13 @@ $light_gray:#eee;
     &_login {
       font-size: 20px;
     }
+  }
+  .svg-icon-three{
+    padding: 0px 5px 5px 15px;
+    vertical-align: middle;
+    width: 30px;
+    display: inline-block;
+    font-size: 30px;
   }
   .title-container {
     position: relative;
