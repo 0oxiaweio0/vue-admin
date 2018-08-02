@@ -1,6 +1,6 @@
 <template>
   <div class="register-container">
-    <el-form class="login-form" autoComplete="on" :model="registerForm" :rules="registerRules" ref="loginForm" label-position="left">
+    <el-form class="login-form" autoComplete="on" :model="registerForm" :rules="registerRules" ref="registerForm" label-position="left">
       <div class="title-container">
         <h3 class="title">{{$t('login.title')}}</h3>
         <lang-select class="set-language"></lang-select>
@@ -8,6 +8,7 @@
       <el-row>
         <el-form-item class="no-bg"><span>注册</span></el-form-item>
       </el-row>
+      <!--邮箱-->
       <el-row>
         <el-form-item prop="email">
             <span class="svg-container svg-container_login">
@@ -16,6 +17,7 @@
           <el-input name="username" type="text" v-model="registerForm.email" autoComplete="off" placeholder="请输入邮箱" />
         </el-form-item>
       </el-row>
+      <!--密码-->
       <el-row>
         <el-form-item prop="password">
             <span class="svg-container svg-container_login">
@@ -24,6 +26,7 @@
           <el-input name="password" type="text" v-model="registerForm.password" autoComplete="off" placeholder="请输入密码 " />
         </el-form-item>
       </el-row>
+      <!--二次输入密码-->
       <el-row>
         <el-form-item prop="password">
             <span class="svg-container svg-container_login">
@@ -32,12 +35,16 @@
           <el-input name="rePassword" type="text" v-model="registerForm.rePassword" autoComplete="off" placeholder="请再一次输入密码 " />
         </el-form-item>
       </el-row>
+      <!--电话-->
       <el-row>
         <el-form-item prop="phone">
-            <span class="svg-container svg-container_login">
-              <svg-icon icon-class="phone"/>
-            </span>
-          <el-input name="phone" type="text" v-model="registerForm.phone" autoComplete="off" placeholder="请输入手机号 " />
+          <el-input placeholder="请输入手机号" v-model="registerForm.phone" class="input-with-select">
+            <el-select v-model="registerForm.select" slot="prepend" placeholder="请选择">
+              <el-option label="+86" value="1"></el-option>
+              <el-option label="+97" value="2"></el-option>
+            </el-select>
+          </el-input>
+ <!--         <el-input name="phone" type="text" v-model="registerForm.phone" autoComplete="off" placeholder="请输入手机号 " />-->
         </el-form-item>
       </el-row>
       <el-row>
@@ -83,6 +90,7 @@
         registerRules: {// 注册表单验证规则
         },
         registerForm: { // 注册表单所有字段
+          select: '', // 手机号码前缀
           email: '', // 邮箱
           password: '', // 密码
           rePassword: '', // 密码二次确认
@@ -154,6 +162,19 @@
     }
     .line-height47 .el-form-item__content {
       line-height: 47px;
+    }
+    .el-input-group__prepend{
+      padding: 0;
+    }
+    .el-input-group__prepend .el-select {
+      margin: 0;
+    }
+    .el-select .el-input {
+      width: 110px;
+    }
+    .input-with-select .el-input-group__prepend {
+      background-color: #fff;
+      width: 100%;
     }
 
 
