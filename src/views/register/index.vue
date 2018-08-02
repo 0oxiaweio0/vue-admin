@@ -74,12 +74,8 @@
 
 <script>
   import LangSelect from '@/components/LangSelect'
-  import ElButton from '../../../node_modules/element-ui/packages/button/src/button.vue'
-
   export default {
-    components: {
-      ElButton,
-      LangSelect },
+    components: { LangSelect },
     name: 'register',
     data() {
       return {
