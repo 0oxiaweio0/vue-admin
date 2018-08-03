@@ -43,7 +43,7 @@ export function validateEmail(email) {
 
 /**
  * validata phone
- * @param
+ * @param phone
  * @returns {boolean}
  */
 export function validatePhone(phone) {
@@ -51,3 +51,35 @@ export function validatePhone(phone) {
   return re.test(phone)
 }
 
+/**
+ * valiDate username
+ * @param username
+ * @returns { boolean }
+ * @rule 用户名由字母数字下划线组成
+ */
+export function validateUsername(username) {
+  const re = /^[a-zA-Z0-9_]{4,16}$/
+  return re.test(username.trim())
+}
+
+/**
+ * valiDate password
+ * @param password
+ * @returns { boolean }
+ * @rule //由数字、26个英文字母或者下划线组成的字符串,6-16个字符
+ */
+export function validatePassword(password) {
+  const re = /^\w{6,16}$/
+  return re.test(password.trim())
+}
+
+/**
+ * valiDate password（二次验证）
+ * @param password
+ * @returns { boolean }
+ * @rule //由数字、26个英文字母或者下划线组成的字符串,6-16个字符
+ */
+export function validateRePassword(password) {
+  const re = /^\w{6,16}$/
+  return re.test(password.trim())
+}

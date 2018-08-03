@@ -5,8 +5,8 @@
         <h3 class="title">{{$t('login.title')}}</h3>
         <lang-select class="set-language"></lang-select>
       </div>
-      <el-row>
-        <el-form-item class="no-bg"><span>注册</span></el-form-item>
+      <el-row class="form-label">
+        <h4>注册</h4>
       </el-row>
       <!--邮箱-->
       <el-row>
@@ -14,7 +14,7 @@
             <span class="svg-container svg-container_login">
               <svg-icon icon-class="email" />
             </span>
-          <el-input name="username" type="text" v-model="registerForm.email" autoComplete="off" placeholder="请输入邮箱" />
+          <el-input name="email" type="text" v-model="registerForm.email" autoComplete="off" placeholder="请输入邮箱" />
         </el-form-item>
       </el-row>
       <!--密码-->
@@ -23,7 +23,10 @@
             <span class="svg-container svg-container_login">
               <svg-icon icon-class="password"/>
             </span>
-          <el-input name="password" type="text" v-model="registerForm.password" autoComplete="off" placeholder="请输入密码 " />
+          <el-input name="password" :type="passwordType" v-model="registerForm.password" autoComplete="off" placeholder="请输入密码 " />
+          <span class="show-pwd" @click="showPwd(1)">
+              <svg-icon icon-class="eye" />
+            </span>
         </el-form-item>
       </el-row>
       <!--二次输入密码-->
@@ -32,7 +35,10 @@
             <span class="svg-container svg-container_login">
               <svg-icon icon-class="password"/>
             </span>
-          <el-input name="rePassword" type="text" v-model="registerForm.rePassword" autoComplete="off" placeholder="请再一次输入密码 " />
+          <el-input name="rePassword" :type="rePasswordType" v-model="registerForm.rePassword" autoComplete="off" placeholder="请再一次输入密码 " />
+          <span class="show-pwd" @click="showPwd(2)">
+              <svg-icon icon-class="eye" />
+            </span>
         </el-form-item>
       </el-row>
       <!--电话-->
@@ -44,7 +50,6 @@
               <el-option label="+97" value="2"></el-option>
             </el-select>
           </el-input>
- <!--         <el-input name="phone" type="text" v-model="registerForm.phone" autoComplete="off" placeholder="请输入手机号 " />-->
         </el-form-item>
       </el-row>
       <el-row>
@@ -81,13 +86,51 @@
 
 <script>
   import LangSelect from '@/components/LangSelect'
+  import { validateEmail, validateRePassword, validatePassword, validatePhone } from '@/utils/validate'
   export default {
     components: { LangSelect },
     name: 'register',
     data() {
+      const validateEmailFn = (rule, value, callback) => {
+        if (!validateEmail(value)) {
+          if (value) {
+            callback(new Error('邮箱格式错误'))
+          } else {
+            callback(new Error('邮箱不能为空'))
+          }
+        } else {
+          callback()
+        }
+      }
+      const validatePasswordFn = (rule, value, callback) => {
+        if (!validatePassword(value)) {
+          if (value) {
+            callback(new Error('密码格式错误'))
+          } else {
+            callback(new Error('密码不能为空'))
+          }
+        } else {
+          callback()
+        }
+      }
+      const validatePhoneFn = (rule, value, callback) => {
+        if (!validatePhone(value)) {
+          if (value) {
+            callback(new Error('手机号输入错误'))
+          } else {
+            callback(new Error('手机号不能为空'))
+          }
+        } else {
+          callback()
+        }
+      }
       return {
         login: '/login', // 跳往登录页
         registerRules: {// 注册表单验证规则
+          email: [{ required: true, trigger: 'blur', validator: validateEmailFn }],
+          password: [{ required: true, trigger: 'blur', validator: validatePasswordFn }],
+          rePassword: [{ required: true, trigger: 'blur', validator: validateRePassword }],
+          phone: [{ required: true, trigger: 'blur', validator: validatePhoneFn }]
         },
         registerForm: { // 注册表单所有字段
           select: '', // 手机号码前缀
@@ -96,10 +139,27 @@
           rePassword: '', // 密码二次确认
           phone: '', // 注册电话
           code: '' // 注册码
-        }
+        },
+        passwordType: 'password',
+        rePasswordType: 'password'
       }
     },
     methods: {
+      showPwd(type) {
+        if (type === 1) {
+          if (this.passwordType === 'password') {
+            this.passwordType = ''
+          } else {
+            this.passwordType = 'password'
+          }
+        } else {
+          if (this.rePasswordType === 'password') {
+            this.rePasswordType = ''
+          } else {
+            this.rePasswordType = 'password'
+          }
+        }
+      }
     },
     created() {
 
@@ -132,6 +192,9 @@
           -webkit-text-fill-color: #fff !important;
         }
       }
+    }
+    .form-label h4{
+      font-weight: normal;
     }
     .el-form-item {
       border: 0px solid rgba(255, 255, 255, 0.1);
@@ -171,6 +234,15 @@
     }
     .el-select .el-input {
       width: 110px;
+    }
+    .input-with-select{
+      width: 100%;
+    }
+   .input-with-select>input{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 240px;
     }
     .input-with-select .el-input-group__prepend {
       background-color: #fff;
