@@ -1,4 +1,4 @@
-const getters = {
+const getters = { // 方便store中集中处理
   sidebar: state => state.app.sidebar,
   language: state => state.app.language,
   device: state => state.app.device,
